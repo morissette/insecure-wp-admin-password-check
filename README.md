@@ -3,10 +3,10 @@ insecure-wp-admin-password-check
 
 Finds Wordpress Admin account with commonly used insecure passwords
 
-Requires:
+<h2>Requires:</h2>
 https://github.com/exavolt/python-phpass
 
-Example Run:
+<h2>Example Run:</h2>
 ```
 [root@box ~]# python find_bad_wp_passwords.py 
 [*] Gathering Wordpress Databases
@@ -27,7 +27,7 @@ Example Run:
 
 passwords.txt has the top 500 insecure common passwords used.
 
-Todo:
+<h2>Todo:</h2>
 Do MD5 conversion for older Wordpress installations
 
 
