@@ -32,9 +32,10 @@ def find_wp_dbs():
         print "[*] Running Password Comparisons Between Insecure Password List"
         all_errors = []
         all_insecure = []
+        password_list = load_password_list()
         for db in db_list:
             data = get_admin_user(db, password)
-            (errors, insecure) = test_passwords(data)
+            (errors, insecure) = test_passwords(data, password_list)
             if len(errors):
                 all_errors.append(errors)
             if len(insecure):
@@ -97,13 +98,11 @@ def load_password_list():
 '''
 Test the site admin against common easily crackable passwords
 '''
-def test_passwords(data):
+def test_passwords(data, password_list):
     url = data['url'][0]
     users = data['users']
     user_count = len(users)
     total_md5 = 0
-    password_list = load_password_list()
-
     errors = []
     insecure = []
     for u in users:
