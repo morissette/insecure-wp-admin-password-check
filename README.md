@@ -25,7 +25,11 @@ https://github.com/exavolt/python-phpass
 [!] All admin users require conversion from MD5 on http://domain.com/e
 ```
 
-passwords.txt has the top 500 insecure common passwords used.
+<h2>Other Files</h2>
+passwords.txt has the top 500 insecure common passwords used. Although any dictionary could be used.
+
+<h2>Disclaimer</h2> 
+This has potential to be used for negative dictionary attacks but was originally developed to identify and alert blog owners of insecure passwords.
 
 <h2>Todo:</h2>
 <ul>
