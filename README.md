@@ -7,6 +7,7 @@ Requires:
 https://github.com/exavolt/python-phpass
 
 Example Run:
+```
 [root@box ~]# python find_bad_wp_passwords.py 
 [*] Gathering Wordpress Databases
 [*] Gathering Wordpress Admin Users
@@ -22,6 +23,7 @@ Example Run:
 [!] All admin users require conversion from MD5 on http://domain.com/d/
 [!] All admin users require conversion from MD5 on http://domain.com
 [!] All admin users require conversion from MD5 on http://domain.com/e
+```
 
 passwords.txt has the top 500 insecure common passwords used.
 
