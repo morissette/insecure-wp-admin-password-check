@@ -28,6 +28,11 @@ https://github.com/exavolt/python-phpass
 passwords.txt has the top 500 insecure common passwords used.
 
 <h2>Todo:</h2>
-Do MD5 conversion for older Wordpress installations
+<ul>
+  <li>Do MD5 conversion for older Wordpress installations</li>
+  <li>Include table prefix differences</li>
+  <li>Provide support for non-root use</li>
+  <li>Provide non-cpanel support</li>
+</ul>
 
 
