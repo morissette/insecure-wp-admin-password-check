@@ -37,6 +37,7 @@ This has potential to be used for negative dictionary attacks but was originally
   <li>Include table prefix differences</li>
   <li>Provide support for non-root use</li>
   <li>Provide non-cpanel support</li>
+  <li>Update output to ascii table structure</li>
 </ul>
 
 
