@@ -22,7 +22,6 @@ def find_wp_dbs():
     print "[*] Gathering Wordpress Databases"
     if os.path.isdir(root_dir):
         for dir_name, sub_dir, file_list in os.walk(root_dir):
-            found = 0
             for fname in file_list:
                 if pattern.match(fname):
                     db_list.append(os.path.basename(dir_name))
@@ -36,9 +35,9 @@ def find_wp_dbs():
         for db in db_list:
             data = get_admin_user(db, password)
             (errors, insecure) = test_passwords(data, password_list)
-            if len(errors):
+            if errors:
                 all_errors.append(errors)
-            if len(insecure):
+            if insecure:
                 all_insecure.append(insecure)
         display_output(all_errors, all_insecure)
     else:
@@ -49,9 +48,8 @@ Requires root to save on io operations on reading possibly thousands of
 wp-config.php files to parse db data
 '''
 def get_root_db_pass():
-    f = open('/root/.my.cnf')
-    lines = f.readlines()
-    f.close()
+    with open('/root/.my.cnf') as f:
+        lines = f.readlines()
     pattern = re.compile("^password=(.*)$")
     for line in lines:
         if pattern.match(line):
@@ -90,9 +88,8 @@ def get_admin_user(db, password):
 Load a precompiled list of commonly used insecure passwords
 '''
 def load_password_list():
-    f = open('passwords.txt')
-    passwords = f.readlines()
-    f.close()
+    with open('passwords.txt') as f:
+        passwords = f.readlines()
     return passwords
 
 '''
@@ -105,10 +102,7 @@ def test_passwords(data, password_list):
     total_md5 = 0
     errors = []
     insecure = []
-    for u in users:
-        username = u[0]
-        password_hash = u[1]
-
+    for username, password_hash in users:
         if len(password_hash) <= 32:
             '''
             Haven't written support yet for older versions and md5 conversion
@@ -118,8 +112,7 @@ def test_passwords(data, password_list):
             wp_hasher = phpass.PasswordHash(8, True)
             for p in password_list:
                 p = p.strip()
-                check = wp_hasher.check_password(p, password_hash)
-                if check:
+                if wp_hasher.check_password(p, password_hash):
                     insecure.append("[!] Insecure password found for admin user %s:%s on %s" % (username, p, url))
 
     if total_md5 == user_count:
@@ -140,4 +133,5 @@ def display_output(errors, insecure):
     for e in errors:
         print "\n".join(e)
 
-find_wp_dbs()
+if __name__ == "__main__":
+    find_wp_dbs()
