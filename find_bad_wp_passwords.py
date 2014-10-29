@@ -11,11 +11,12 @@ import sys
 import phpass
 import MySQLdb
 
-'''
-Find a list of wordpress databases based of the wp_ table prefix
-Currently set to search default value of cPanel boxes
-'''
+
 def find_wp_dbs():
+    '''
+    Find a list of wordpress databases based of the wp_ table prefix
+    Currently set to search default value of cPanel boxes
+    '''
     root_dir = '/var/lib/mysql'
     pattern = re.compile("^wp_")
     db_list = []
@@ -43,11 +44,11 @@ def find_wp_dbs():
     else:
         print 'MySQL directory does not exist.' + "\n"
 
-'''
-Requires root to save on io operations on reading possibly thousands of
-wp-config.php files to parse db data
-'''
 def get_root_db_pass():
+    '''
+    Requires root to save on io operations on reading possibly thousands of
+    wp-config.php files to parse db data
+    '''
     with open('/root/.my.cnf') as f:
         lines = f.readlines()
     pattern = re.compile("^password=(.*)$")
@@ -56,11 +57,11 @@ def get_root_db_pass():
             match = pattern.match(line)
             return match.group(1)
 
-'''
-Function returns a data structure dict of list
-'url' => [users]
-'''
 def get_admin_user(db, password):
+    '''
+    Function returns a data structure dict of list
+    'url' => [users]
+    '''    
     try:
         con = MySQLdb.connect('localhost', 'root', password, db)
         cur = con.cursor()
@@ -84,18 +85,18 @@ def get_admin_user(db, password):
         if con:
             con.close()
 
-'''
-Load a precompiled list of commonly used insecure passwords
-'''
 def load_password_list():
+    '''
+    Load a precompiled list of commonly used insecure passwords
+    '''    
     with open('passwords.txt') as f:
         passwords = f.readlines()
     return passwords
 
-'''
-Test the site admin against common easily crackable passwords
-'''
 def test_passwords(data, password_list):
+    '''
+    Test the site admin against common easily crackable passwords
+    '''    
     url = data['url'][0]
     users = data['users']
     user_count = len(users)
@@ -120,10 +121,10 @@ def test_passwords(data, password_list):
 
     return errors, insecure
 
-'''
-Display errors and insecure passwords
-'''
 def display_output(errors, insecure):
+    '''
+    Display errors and insecure passwords
+    '''
     print
     print "*******************************Insecure Passwords Found*****************************"
     for i in insecure:
